@@ -1,0 +1,30 @@
+package lambdae;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class assignment1 {
+    
+    String name;
+    int price;
+    public assignment1( String name, int price) {
+
+        this.name = name;
+        this.price = price;
+    }
+}
+class Stream {
+    public static void main(String[] args) {
+        ArrayList<assignment1> productsList = new ArrayList<assignment1>();
+        productsList.add(new assignment1("HP ",20000));
+        productsList.add(new assignment1("Dell ",35000));
+        productsList.add(new assignment1("Lenevo ",28000));
+        productsList.add(new assignment1("Sony ",30000));
+        productsList.add(new assignment1("Apple ",80000));
+        System.out.println(
+                productsList.stream()
+                        .filter(p -> p.price > 30000)
+                        .map(p->p.price)
+                        .reduce((int) 0, (v1, v2) -> v1 + v2));
+    }
