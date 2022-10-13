@@ -1,0 +1,26 @@
+package lambdae;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class assignment1 {
+String name;
+    int salary;
+    public  assignment1(String name,int salary){
+        this.name=name;
+        this.salary=salary;
+    }
+
+}
+class abc{
+    public static void main(String[] args) {
+        ArrayList<assignment1>e=new ArrayList<>();
+        e.add(new assignment1("priyanka",50000));
+        e.add(new assignment1("sandhya",60000));
+        e.add(new assignment1("tejaswini",55000));
+        e.add(new assignment1("pratik winchester",45000));
+        System.out.println(e.stream().map(n->n.name).sorted().collect(Collectors.toList()));
+        System.out.println(e.stream().map(s->s.salary).sorted().collect(Collectors.toList()));
+    }
+}
