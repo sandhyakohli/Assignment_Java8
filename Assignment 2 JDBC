@@ -1,0 +1,117 @@
+package JDBC;
+
+import java.sql.*;
+import java.util.Scanner;
+
+public class assignment2JDBC {
+    static String username = "root";
+    static String password = "06071997";
+    static String DB_URL = "jdbc:mysql://localhost:3306/datab";
+
+    public static void main(String[] args) throws SQLException {
+
+        Connection c = DriverManager.getConnection(DB_URL, username, password);
+        Statement s = c.createStatement();
+        int a;
+
+        do {
+            System.out.println("Enter your choice:");
+            System.out.println("Press 1 to create table");
+            System.out.println("Press 2 to Insert the data");
+            System.out.println("Press 3 to select the data");
+            System.out.println("Press 4 to update the data");
+            System.out.println("Press 5 to Delete the data");
+            System.out.println("Press 6 to Exit");
+            Scanner sc = new Scanner(System.in);
+            a = sc.nextInt();
+
+
+            switch (a) {
+                case 1:
+                    System.out.println("Enter Table Name: ");
+                    String tableName = sc.next();
+                    String query = "CREATE TABLE " + tableName +
+                            "(id INTEGER not NULL, " +
+                            " first VARCHAR(20), " +
+                            " last VARCHAR(20), " +
+                            " age INTEGER, " +
+                            " PRIMARY KEY ( id ))";
+                    s.executeUpdate(query);
+                    System.out.println("Table created");
+
+                    break;
+
+                case 2:
+
+                    System.out.println("Enter Name of table where data is to be inserted");
+                    String tablename = sc.next();
+                    System.out.println("Enter number of names you wanna add:");
+                    int number = sc.nextInt();
+                    for (int i = 0; i < number; i++) {
+                        System.out.println("Enter the id data");
+                        int id = sc.nextInt();
+                        System.out.println("Enter the First name data");
+                        String fname = sc.next();
+                        System.out.println("Enter the Last name data");
+                        String lname = sc.next();
+                        System.out.println("Enter the age data");
+                        int age = sc.nextInt();
+                        String sql = "insert into " + tablename + "(id,first,last,age) values('" + id + "','" + fname + "','" + lname + "','" + age + "');";
+                        PreparedStatement ps = c.prepareStatement(sql);
+                        ps.executeUpdate();
+                    }
+                    System.out.println("inserted successfully");
+
+                    break;
+                case 3:
+
+                    System.out.println("Enter Table Name to be Selected: ");
+
+                    tablename = sc.next();
+                    String query6 = "SELECT * FROM " + tablename;
+                    ResultSet rs = s.executeQuery(query6);
+                    while (rs.next()) {
+                        System.out.println("Id: " + rs.getInt(1) + ", Name: " + rs.getString(2) + " " + rs.getString(3) + ", Age: " + rs.getInt(4));
+                    }
+                    break;
+                case 4:
+                    System.out.println("Enter Table Name to be Selected: ");
+
+                    tablename = sc.next();
+                    System.out.println("enter id");
+
+                    int id = sc.nextInt();
+                    System.out.println("enter new name");
+
+                    String value1 = sc.next();
+                    String value2 = sc.next();
+                    int value3 = sc.nextInt();
+                    String query1 = "UPDATE " + tablename + " SET first ='" + value1 + "' WHERE id ='" + id + "'";
+                    PreparedStatement p1 = c.prepareStatement(query1);
+                    p1.executeUpdate();
+                    System.out.println("DataUpdated!!!");
+
+                case 5:
+
+                    System.out.println("Enter Table Name to be Selected:");
+
+                    tablename = sc.next();
+                    System.out.println("enter id");
+
+                    id = sc.nextInt();
+                    String query3 = "DELETE FROM " + tablename + " WHERE id='" + id + "' ";
+                    PreparedStatement ps = c.prepareStatement(query3);
+                    ps.executeUpdate();
+                    System.out.println("Data Deleted!");
+                    break;
+                case 6:
+                    System.exit(1);
+                default:
+                    System.out.println("Enter valid choice!!!");
+
+            }
+
+        } while (a != 6);
+    }
+}
+
